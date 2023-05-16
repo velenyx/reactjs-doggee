@@ -1,0 +1,15 @@
+.App {
+  font-family: 'Open Sans';
+  font-style: normal;
+  background-color: #fff;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}

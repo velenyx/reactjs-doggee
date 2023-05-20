@@ -1,0 +1,82 @@
+.input__container {
+  display: flex;
+  background: var(--background-color-field);
+  border-radius: 5px;
+  padding: 20px 40px 9px 15px;
+  position: relative;
+  cursor: text;
+  transition: var(--transition);
+}
+
+.input__container:hover {
+  background: var(--color-field-focused);
+}
+
+.input__container:has(.input:disabled) {
+  background: var(--color-field-focused);
+  pointer-events: none;
+}
+
+.input__container:has(.input:active),
+.input__container:has(.input:focus) {
+  background: var(--color-field-focused);
+}
+
+.input__error,
+.input__error:hover,
+.input__error:has(.input:active),
+.input__error:has(.input:focus) {
+  background: var(--color-text-validation3);
+}
+
+.input:active,
+.input:focus {
+  outline: none;
+  caret-color: var(--color-text);
+}
+
+.input__label {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  color: var(--color-placeholder);
+  z-index: 10;
+  transition: transform 150ms ease-out, font-size 150ms ease-out;
+  text-transform: capitalize;
+  background: transparent;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  pointer-events: none;
+}
+
+.input:focus ~ .input__label {
+  transform: translate(-10%, -50%);
+  font-size: 10px;
+  line-height: 14px;
+}
+
+.input:not([value='']) ~ .input__label {
+  transform: translate(-10%, -50%);
+  font-size: 10px;
+  line-height: 14px;
+}
+
+.input {
+  border: none;
+  width: 100%;
+  font-size: 14px;
+  line-height: 19px;
+  color: var(--color-text);
+  background: transparent;
+}
+
+.helper_text {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-text-validation);
+  padding-left: 10px;
+}

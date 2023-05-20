@@ -1,0 +1,47 @@
+.checkbox__container {
+  cursor: pointer;
+  display: flex;
+}
+
+.checkbox {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.checkbox__container:has(.checkbox:disabled) {
+  pointer-events: none;
+}
+
+.custom__checkbox {
+  display: inline-block;
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+  background: transparent;
+  border-radius: 5px;
+  border: 3px solid var(--color-accent7);
+}
+
+.checkbox__container:hover .custom__checkbox {
+  border: 3px solid var(--color-accent);
+}
+
+.checkbox:checked ~ .custom__checkbox {
+  border: none;
+  background-image: url('../../../../static/images/checkbox.svg');
+}
+
+.checkbox__label {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-text);
+  padding-left: 5px;
+}

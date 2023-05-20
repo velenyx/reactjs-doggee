@@ -1,19 +1,25 @@
-import React, { FC } from 'react';
+import React, { FC, useRef, useState } from 'react';
 
-import './Input.css';
+import styles from '../Input.module.css';
 
-interface InputProps extends React.HTMLProps<HTMLInputElement> {
-  isError?: boolean;
-  helperText?: string;
-}
-
-export const Input: FC<InputProps> = ({ isError = false, helperText, ...props }) => {
-  const className = isError ? 'input__error' : '';
+export const Input: FC<InputProps> = ({ isError = false, helperText, label, ...props }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div>
-      <input className={className} {...props} />
-      {isError && helperText && <div className='input__helper_text'>{helperText}</div>}
-    </div>
+    <>
+      <div
+        aria-hidden
+        className={`${styles.input__container} ${
+          isError ? styles.input__error : styles.input__container
+        }`}
+        onClick={() => inputRef.current?.focus()}
+      >
+        <input ref={inputRef} className={styles.input} {...props} />
+        <label htmlFor='s' className={styles.input__label}>
+          {label}
+        </label>
+      </div>
+      {isError && helperText && <div className={styles.helper_text}>{helperText}</div>}
+    </>
   );
 };

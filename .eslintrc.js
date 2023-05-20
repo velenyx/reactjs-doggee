@@ -3,6 +3,7 @@ module.exports = {
     browser: true,
     es2021: true
   },
+  parser: '@typescript-eslint/parser',
   extends: ['plugin:react/recommended', 'airbnb', 'airbnb-typescript', 'prettier'],
   overrides: [
     {
@@ -39,6 +40,7 @@ module.exports = {
     'react/no-array-index-key': 0,
     'class-methods-use-this': 0,
     'no-param-reassign': 0,
+    'jsx-a11y/label-has-associated-control': 0,
 
     'import/order': 0,
     'simple-import-sort/exports': 1,

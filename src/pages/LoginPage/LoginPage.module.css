@@ -1,0 +1,59 @@
+.page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Open Sans';
+}
+
+.container {
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: var(--shadow-container);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 105px;
+}
+
+.header__container {
+  height: 150px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  font-family: 'Baloo';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 63px;
+  color: #ffffff;
+  padding: 12px 0;
+  background-image: url('../../static/images/dogge_background.svg');
+}
+
+.form__container {
+  padding: 0px 125px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.input__container {
+}
+
+.signup__container {
+  color: var(--color-accent);
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  text-align: center;
+  padding-bottom: 15px;
+  cursor: pointer;
+  text-decoration: none;
+}

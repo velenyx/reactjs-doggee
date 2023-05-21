@@ -5,7 +5,12 @@
     "paths": {
       "@common/*": ["./common/*"],
       "@pages": ["./pages"],
-      "@utils": ["./utils"]
+      "@static/*": ["./static/*"],
+      "@utils/helpers": ["./utils/helpers"],
+      "@utils/hooks": ["./utils/hooks"],
+      "@utils/contexts": ["./utils/contexts"],
+      "@utils/api": ["./utils/api"],
+      "@features": ["./features"]
     }
   }
 }

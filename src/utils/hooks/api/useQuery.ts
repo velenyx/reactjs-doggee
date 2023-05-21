@@ -8,7 +8,7 @@ export const useQuery = <K>(request: () => Promise<any>, deps: React.DependencyL
   React.useEffect(() => {
     setIsLoading(true);
     try {
-      request().then(async (response) => {
+      request().then((response) => {
         setData(response.data);
         setIsLoading(false);
       });

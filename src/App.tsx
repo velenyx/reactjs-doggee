@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
-import { LoginPage, NotFoundPage, RegistrationPage } from '@pages';
-import { deleteCookie, getCookies } from '@utils';
+import { IntlProvider } from '@features';
+import { LoginPage, RegistrationPage } from '@pages';
+import { deleteCookie, getCookies, getLocale, getMessages } from '@utils/helpers';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import './App.css';
 
@@ -25,6 +26,9 @@ export const App = () => {
   const [isAuth, setIsAuth] = React.useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  const [messages, setMessages] = useState({});
+  const locale = getLocale();
+
   useEffect(() => {
     const authCookie = getCookies('refreshToken');
     const isNotMyDevice = getCookies('doggee-isNotMyDevice');
@@ -38,10 +42,19 @@ export const App = () => {
     if (authCookie && !deviceExpire) {
       setIsAuth(true);
     }
+
+    getMessages(locale).then((messages) => {
+      setMessages(messages);
+      setIsLoading(false);
+    });
     setIsLoading(false);
   }, []);
 
   if (isLoading) return null;
 
-  return <BrowserRouter>{isAuth ? <MainRoutes /> : <AuthRoutes />}</BrowserRouter>;
+  return (
+    <IntlProvider locale={locale} messages={messages}>
+      <BrowserRouter>{isAuth ? <MainRoutes /> : <AuthRoutes />}</BrowserRouter>
+    </IntlProvider>
+  );
 };

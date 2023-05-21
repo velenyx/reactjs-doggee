@@ -22,10 +22,7 @@ export class API {
     if (!response.ok) throw new Error(response.statusText);
 
     const responseData = (await response.json()) as ApiResponse<T>;
-    if (responseData.success) {
-      return { data: responseData, status: response.status, success: responseData.success };
-    }
-    return { data: responseData, status: response.status, success: responseData.success };
+    return { data: responseData };
   }
 
   get<T>(endpoint: string, options: Omit<RequestInit, 'body'> = {}) {

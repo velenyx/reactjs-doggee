@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ESNext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -14,8 +14,11 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react"
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "jsx": "react-jsx"
   },
-  "include": ["**/*.ts", "*/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts"],
+  // "include": ["src"],
   "extends": "./tsconfig.paths.json"
 }

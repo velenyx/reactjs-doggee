@@ -1,7 +1,7 @@
-import React, { FC, useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 
-import inputStyles from '../Input.module.css';
 import styles from './PasswordInput.module.css';
+import inputStyles from '../Input.module.css';
 
 export const PasswordInput: FC<InputProps> = ({ isError = false, helperText, label, ...props }) => {
   const inputRef = useRef<HTMLInputElement>(null);

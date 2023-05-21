@@ -1,4 +1,3 @@
-import React, { FC } from 'react';
-import { useLocation } from 'react-router-dom';
+import React from 'react';
 
-export const RegistrationPage: FC = () => <div>Registration Page</div>;
+export const RegistrationPage: React.FC = () => <div>Registration Page</div>;

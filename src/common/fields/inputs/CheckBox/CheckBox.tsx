@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 import styles from './CheckBox.module.css';
 
@@ -12,6 +12,6 @@ export const CheckBox: FC<InputProps> = ({ label, ...props }) => (
       {...props}
     />
     <span className={styles.custom__checkbox} />
-    <span className={styles.checkbox__label}>This is not my device</span>
+    <span className={styles.checkbox__label}>{label}</span>
   </label>
 );

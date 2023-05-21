@@ -7,7 +7,7 @@ export const useQueryLazy = <K>(request: () => Promise<any>) => {
   const query = useCallback(async (): Promise<K | undefined> => {
     setIsLoading(true);
     try {
-      return await request().then(async (response) => response);
+      return await request().then((response) => response);
     } catch (error) {
       setIsLoading(false);
       setError((error as Error).message);

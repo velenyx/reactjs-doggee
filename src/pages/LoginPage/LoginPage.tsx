@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@common/buttons';
 import { CheckBox, Input, PasswordInput } from '@common/fields';
-import { api, setCookie, useMutation, useQuery, useQueryLazy } from '@utils';
+import { IntlText } from '@features';
+import { api } from '@utils/api';
+import { setCookie } from '@utils/helpers';
+import { useMutation } from '@utils/hooks';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './LoginPage.module.css';
 
@@ -32,7 +35,7 @@ interface FormErrors {
 interface User {
   username: string;
   password: string;
-  id: string;
+  _id: string;
 }
 
 export const LoginPage = () => {
@@ -43,9 +46,10 @@ export const LoginPage = () => {
     password: '',
     isNotMyDevice: false
   });
-  const { mutation: authMutation, isLoading: AuthLoading } = useMutation<typeof formValues, User>(
-    (values) => api.post('login', values)
-  );
+  const { mutationAsync: authMutation, isLoading: authLoading } = useMutation<
+    typeof formValues,
+    ApiResponse<User[]>
+  >((values) => api.post('login', values));
 
   // const { data, isLoading } = useQuery<User[]>(() => api.get('users'));
   // console.log('@data', data);
@@ -75,7 +79,7 @@ export const LoginPage = () => {
         >
           <div className={styles.input__container}>
             <Input
-              disabled={AuthLoading}
+              disabled={authLoading}
               value={formValues.username}
               label='username'
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,7 +96,7 @@ export const LoginPage = () => {
           </div>
           <div className={styles.input__container}>
             <PasswordInput
-              disabled={AuthLoading}
+              disabled={authLoading}
               value={formValues.password}
               label='password'
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,7 +113,7 @@ export const LoginPage = () => {
           </div>
           <div>
             <CheckBox
-              disabled={AuthLoading}
+              disabled={authLoading}
               checked={formValues.isNotMyDevice}
               label='This is not my device'
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -119,8 +123,8 @@ export const LoginPage = () => {
             />
           </div>
           <div>
-            <Button isLoading={AuthLoading} type='submit'>
-              Sign in
+            <Button isLoading={authLoading} type='submit'>
+              <IntlText path='button.signIn' />
             </Button>
           </div>
         </form>
@@ -131,7 +135,7 @@ export const LoginPage = () => {
           className={styles.signup__container}
           onClick={() => navigate('/registration')}
         >
-          Create new account
+          <IntlText path='page.login.createNewAccount' />
         </div>
       </div>
     </div>

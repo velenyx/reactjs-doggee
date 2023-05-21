@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from 'react';
+import { FC, useRef } from 'react';
 
 import styles from '../Input.module.css';
 

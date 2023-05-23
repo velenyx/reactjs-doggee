@@ -4,11 +4,14 @@
   justify-content: center;
   align-items: center;
   font-family: 'Open Sans';
+  transition: var(--transition);
+  background-color: var(--background-color);
 }
 
 .container {
   overflow: hidden;
-  background: #ffffff;
+  background: var(--background-color);
+  transition: var(--transition);
   box-shadow: var(--shadow-container);
   border-radius: 20px;
   display: flex;
@@ -31,7 +34,8 @@
   line-height: 63px;
   color: #ffffff;
   padding: 12px 0;
-  background-image: url('../../static/images/dogge_background.svg');
+  background-image: var(--images-auth-header);
+  background-size: cover;
 }
 
 .form__container {

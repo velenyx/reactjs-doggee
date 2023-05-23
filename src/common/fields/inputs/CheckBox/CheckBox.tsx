@@ -3,7 +3,7 @@ import { FC } from 'react';
 import styles from './CheckBox.module.css';
 
 export const CheckBox: FC<InputProps> = ({ label, ...props }) => (
-  <label className={styles.checkbox__container}>
+  <label htmlFor={props.id} className={styles.checkbox__container}>
     <input
       name='device'
       type='checkbox'

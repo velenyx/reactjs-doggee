@@ -8,14 +8,14 @@ export const Input: FC<InputProps> = ({ isError = false, helperText, label, ...p
   return (
     <>
       <div
-        aria-hidden
+        role='button'
         className={`${styles.input__container} ${
           isError ? styles.input__error : styles.input__container
         }`}
         onClick={() => inputRef.current?.focus()}
       >
         <input ref={inputRef} className={styles.input} {...props} />
-        <label htmlFor='s' className={styles.input__label}>
+        <label htmlFor={props.id} className={styles.input__label}>
           {label}
         </label>
       </div>

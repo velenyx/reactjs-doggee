@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { IntlProvider } from '@features';
+import { IntlProvider, Theme, ThemeProvider } from '@features';
 import { LoginPage, RegistrationPage } from '@pages';
 import { deleteCookie, getCookies, getLocale, getMessages } from '@utils/helpers';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
@@ -52,9 +52,13 @@ export const App = () => {
 
   if (isLoading) return null;
 
+  const theme = (getCookies('doggee-theme') as Theme) ?? 'light';
+
   return (
-    <IntlProvider locale={locale} messages={messages}>
-      <BrowserRouter>{isAuth ? <MainRoutes /> : <AuthRoutes />}</BrowserRouter>
-    </IntlProvider>
+    <ThemeProvider theme={theme}>
+      <IntlProvider locale={locale} messages={messages}>
+        <BrowserRouter>{isAuth ? <MainRoutes /> : <AuthRoutes />}</BrowserRouter>
+      </IntlProvider>
+    </ThemeProvider>
   );
 };

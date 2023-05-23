@@ -11,7 +11,7 @@ export const PasswordInput: FC<InputProps> = ({ isError = false, helperText, lab
   return (
     <>
       <div
-        aria-hidden
+        role='button'
         className={`${inputStyles.input__container} ${
           isError ? inputStyles.input__error : inputStyles.input__container
         } `}
@@ -25,13 +25,13 @@ export const PasswordInput: FC<InputProps> = ({ isError = false, helperText, lab
           className={inputStyles.input}
           {...props}
         />
-        <label htmlFor='s' className={inputStyles.input__label}>
+        <label htmlFor={props.id} className={inputStyles.input__label}>
           {label}
         </label>
         {showPasswordToggle && (
           <div
             className={styles.passwordtoggle__container}
-            aria-hidden
+            role='button'
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? (

@@ -1,7 +1,7 @@
-.App {
+body {
   font-family: 'Open Sans';
   font-style: normal;
-  background-color: #fff;
+  background-color: var(--background-color);
 }
 
 html {

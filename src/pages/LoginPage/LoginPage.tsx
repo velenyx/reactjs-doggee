@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Button } from '@common/buttons';
 import { CheckBox, Input, PasswordInput } from '@common/fields';
 import { IntlText } from '@features';
 import { api } from '@utils/api';
 import { setCookie } from '@utils/helpers';
-import { useMutation } from '@utils/hooks';
+import { useForm, useMutation } from '@utils/hooks';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './LoginPage.module.css';
@@ -21,117 +21,113 @@ const validatePassword = (value: string) => validateIsEmpty(value);
 
 const loginFormValidateSchema = {
   username: validateUsername,
-  password: validatePassword
+  password: validatePassword,
+  test: 123
 };
 
-const validateLoginForm = (name: 'username' | 'password', value: string) =>
-  loginFormValidateSchema[name](value);
+// const validateLoginForm = (name: 'username' | 'password', value: string) =>
+//   loginFormValidateSchema[name](value);
 
-interface FormErrors {
-  username: string | null;
-  password: string | null;
+interface FormValues {
+  username: string;
+  password: string;
+  isNotMyDevice: boolean;
 }
 
 interface User {
   username: string;
   password: string;
-  _id: string;
 }
 
 export const LoginPage = () => {
   const navigate = useNavigate();
+  // isLoading: authLoading
+  const { mutationAsync: authMutation } = useMutation<FormValues, ApiResponse<User[]>>((values) =>
+    api.post('login', values)
+  );
 
-  const [formValues, setFormValues] = useState({
-    username: '',
-    password: '',
-    isNotMyDevice: false
+  const { values, errors, setFieldValue, handleSubmit } = useForm<FormValues>({
+    initialValues: {
+      username: '',
+      password: '',
+      isNotMyDevice: false
+    },
+    validateSchema: loginFormValidateSchema,
+    validateOnChange: false,
+    onSubmit: async (values) => {
+      console.log('@values', values);
+      const response = await authMutation(values);
+
+      if (response && values.isNotMyDevice) {
+        setCookie('doggee-isNotMyDevice', new Date().getTime() + 30 * 60000);
+      }
+      // const response = await query();
+      console.log('@response', response);
+    }
   });
-  const { mutationAsync: authMutation, isLoading: authLoading } = useMutation<
-    typeof formValues,
-    ApiResponse<User[]>
-  >((values) => api.post('login', values));
 
   // const { data, isLoading } = useQuery<User[]>(() => api.get('users'));
   // console.log('@data', data);
   // const { query, isLoading } = useQueryLazy<User[]>(() => api.get('users'));
   // console.log('@query', query);
 
-  const [formErrors, setFormErrors] = useState<FormErrors>({
-    username: null,
-    password: null
-  });
-
   return (
     <div className={styles.page}>
       <div className={styles.container}>
         <div className={styles.header__container}>DOGGEE</div>
-        <form
-          className={styles.form__container}
-          onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
-            event.preventDefault();
-            const response = await authMutation(formValues);
-
-            if (response && formValues.isNotMyDevice) {
-              setCookie('doggee-isNotMyDevice', new Date().getTime() + 30 * 60000);
-            }
-            // const response = await query();
-          }}
-        >
+        <form className={styles.form__container} onSubmit={handleSubmit}>
           <div className={styles.input__container}>
             <Input
-              disabled={authLoading}
-              value={formValues.username}
+              // disabled={authLoading}
+              value={values?.username}
               label='username'
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 const username = event.target.value;
-                setFormValues({ ...formValues, username });
-                const error = validateLoginForm('username', username);
-                setFormErrors({ ...formErrors, username: error });
+                setFieldValue('username', username);
               }}
-              {...(!!formErrors.username && {
-                isError: !!formErrors.username,
-                helperText: formErrors.username
+              {...(!!errors?.username && {
+                isError: !!errors.username,
+                helperText: errors.username
               })}
             />
           </div>
           <div className={styles.input__container}>
             <PasswordInput
-              disabled={authLoading}
-              value={formValues.password}
+              // disabled={authLoading}
+              value={values?.password}
               label='password'
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 const password = event.target.value;
-                setFormValues({ ...formValues, password });
-                const error = validateLoginForm('password', password);
-                setFormErrors({ ...formErrors, password: error });
+                setFieldValue('password', password);
               }}
-              {...(!!formErrors.password && {
-                isError: !!formErrors.password,
-                helperText: formErrors.password
+              {...(!!errors?.password && {
+                isError: !!errors.password,
+                helperText: errors.password
               })}
             />
           </div>
           <div>
             <CheckBox
-              disabled={authLoading}
-              checked={formValues.isNotMyDevice}
+              // disabled={authLoading}
+              checked={values?.isNotMyDevice}
               label='This is not my device'
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 const notMyComputer = event.target.checked;
-                setFormValues({ ...formValues, isNotMyDevice: notMyComputer });
+                setFieldValue('isNotMyDevice', notMyComputer);
               }}
             />
           </div>
           <div>
-            <Button isLoading={authLoading} type='submit'>
+            {/* isLoading={isSubmiting} */}
+            <Button type='submit'>
               <IntlText path='button.signIn' />
             </Button>
           </div>
         </form>
         <div
+          aria-hidden
           role='link'
           tabIndex={0}
-          aria-hidden
           className={styles.signup__container}
           onClick={() => navigate('/registration')}
         >

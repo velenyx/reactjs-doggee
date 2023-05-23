@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import type { IntlContextProps } from './IntlContext';
 import { IntlContext } from './IntlContext';
@@ -8,5 +8,7 @@ interface IntlProviderProps extends IntlContextProps {
 }
 
 export const IntlProvider: React.FC<IntlProviderProps> = ({ locale, messages, children }) => {
-  return <IntlContext.Provider value={{ locale, messages }}>{children}</IntlContext.Provider>;
+  const value = useMemo(() => ({ locale, messages }), [locale, messages]);
+
+  return <IntlContext.Provider value={value}>{children}</IntlContext.Provider>;
 };

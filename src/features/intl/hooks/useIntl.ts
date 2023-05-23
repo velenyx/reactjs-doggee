@@ -1,27 +1,21 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 
 import { IntlContext } from '../';
-
-export interface TranslateMessageProps {
-  path: string;
-  values?: Record<string, string | number | boolean>;
-}
 
 export const useIntl = () => {
   const intl = React.useContext(IntlContext);
 
   const translateMessage = (
-    path: TranslateMessageProps['path'],
-    values?: TranslateMessageProps['values']
+    path: TranslateMessage['path'],
+    values?: TranslateMessage['values']
   ) => {
     if (!intl.messages[path]) return path;
     if (!values) return intl.messages[path];
 
-    let translate = intl.messages[path];
-    for (const key in values) {
-      translate = translate.replace(`{${key}}`, String(values[key]));
-    }
+    const translate = intl.messages[path];
+    Object.keys(values).forEach((key) => {
+      translate.replace(`{${key}}`, String(values[key]));
+    });
 
     return translate;
   };

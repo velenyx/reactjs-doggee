@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 export const setCookie = (
   name: string,
   value: string | number | boolean | null,
@@ -19,15 +18,13 @@ export const setCookie = (
   const cookieValue = value ? encodeURIComponent(value) : null;
   let updatedCookie = `${name}=${cookieValue}`;
 
-  for (const propName in cookieOptions) {
-    if (propName) {
-      updatedCookie += `; ${propName}`;
-      const propValue = cookieOptions[propName];
-      if (propValue !== true) {
-        updatedCookie += `=${propValue}`;
-      }
+  Object.keys(cookieOptions).forEach((propName) => {
+    updatedCookie += `; ${propName}`;
+    const propValue = cookieOptions[propName];
+    if (propValue !== true) {
+      updatedCookie += `=${propValue}`;
     }
-  }
+  });
 
   document.cookie = updatedCookie;
 };

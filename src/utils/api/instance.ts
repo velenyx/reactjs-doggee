@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 type BaseUrl = string;
 const baseUrl: BaseUrl = 'http://localhost:5000/api/';
 
@@ -8,7 +9,7 @@ export class API {
     this.baseUrl = baseUrl;
   }
 
-  async request<T>(endpoint: string, options: RequestInit = {}) {
+  async request(endpoint: string, options: RequestInit = {}) {
     const response = await fetch(this.baseUrl + endpoint, {
       method: 'GET',
       credentials: 'include',
@@ -21,16 +22,16 @@ export class API {
 
     if (!response.ok) throw new Error(response.statusText);
 
-    const responseData = (await response.json()) as ApiResponse<T>;
+    const responseData = await response.json();
     return { data: responseData };
   }
 
-  get<T>(endpoint: string, options: Omit<RequestInit, 'body'> = {}) {
-    return this.request<T>(endpoint, { ...options, method: 'GET' });
+  get(endpoint: string, options: Omit<RequestInit, 'body'> = {}) {
+    return this.request(endpoint, { ...options, method: 'GET' });
   }
 
-  post<T>(endpoint: string, body: Record<string, any>, options: RequestInit = {}) {
-    return this.request<T>(endpoint, {
+  post(endpoint: string, body: Record<string, any>, options: RequestInit = {}) {
+    return this.request(endpoint, {
       ...options,
       method: 'POST',
       ...(!!body && { body: JSON.stringify(body) })

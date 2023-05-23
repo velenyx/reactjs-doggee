@@ -1,6 +1,7 @@
 .input__container {
   display: flex;
   background: var(--background-color-field);
+  transition: var(--transition);
   border-radius: 5px;
   padding: 20px 40px 9px 15px;
   position: relative;
